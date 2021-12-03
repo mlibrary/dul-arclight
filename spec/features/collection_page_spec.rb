@@ -11,9 +11,9 @@ RSpec.describe 'Collection Page', type: :feature do
     end
 
     it 'looks up UA record group titles and links to the facet' do
-      expect(page).to have_link('31 — Student/Campus Life',
+      expect(page).to have_link('31 -- Student/Campus Life',
                                 href: '/?f%5Bua_record_group_ssim%5D%5B%5D=31')
-      expect(page).to have_link('11 — Student Organizations - Recreational Sports',
+      expect(page).to have_link('11 -- Student Organizations - Recreational Sports',
                                 href: '/?f%5Bua_record_group_ssim%5D%5B%5D=31%3A11')
     end
   end
