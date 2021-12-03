@@ -81,16 +81,17 @@ module DulArclight
     end
 
     # Map the UA record group codes to display their titles instead - this only works in the
-    # facet selection history and in links in the collection metadata, not the facet itself. See
-    # hierarchy_helper.rb for the facet rendering logic.
+    # facet selection history and in links in the collection metadata, not the facet itself.
+    # Note that the facet selection history involves user input and cannot be html_safe.
+    # See hierarchy_helper.rb for the facet rendering logic.
 
     # subgroup_label & group_label are defined in hierarchy_helper.rb
 
     def ua_record_group_display(value = '')
       group_keys = value.split(':')
-      label = [group_keys.last, ' &mdash; '].join
+      label = [group_keys.last, ' -- '].join
       label << (group_keys.count > 1 ? subgroup_label(group_keys) : group_label(group_keys))
-      label.html_safe
+      label
     end
 
     # Override existing ArcLight core helper to support .html_safe
