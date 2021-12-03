@@ -103,28 +103,28 @@ RSpec.describe DulArclight::FieldConfigHelpers do
     context 'when a top-level record group has a title in the yml config' do
       it 'concatenates number & title' do
         content = helper.ua_record_group_display('31')
-        expect(content).to eq '31 &mdash; Student/Campus Life'
+        expect(content).to eq '31 -- Student/Campus Life'
       end
     end
 
     context 'when a top-level group is unlisted or untitled in the yml config' do
       it 'concatenates number & "Unknown" for title' do
         content = helper.ua_record_group_display('9999')
-        expect(content).to eq '9999 &mdash; Unknown'
+        expect(content).to eq '9999 -- Unknown'
       end
     end
 
     context 'when a subgroup has a title in the yml config' do
       it 'concatenates number & title' do
         content = helper.ua_record_group_display('31:11')
-        expect(content).to eq '11 &mdash; Student Organizations - Recreational Sports'
+        expect(content).to eq '11 -- Student Organizations - Recreational Sports'
       end
     end
 
     context 'when a subgroup is unlisted or untitled in the yml config' do
       it 'concatenates number & "Unknown" for title' do
         content = helper.ua_record_group_display('31:9999')
-        expect(content).to eq '9999 &mdash; Unknown'
+        expect(content).to eq '9999 -- Unknown'
       end
     end
   end
