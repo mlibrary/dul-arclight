@@ -459,6 +459,9 @@ class CatalogController < ApplicationController
                                                  }
 
     config.add_component_field 'scopecontent_tesim', label: 'Scope and Content', helper_method: :render_html_tags
+
+    # DUL CUSTOMIZATION: add bioghist field
+    config.add_component_field 'bioghist_tesim', label: 'Biographical / Historical Note', helper_method: :render_html_tags
     config.add_component_field 'acqinfo_ssim', label: 'Acquisition Information', helper_method: :render_html_tags
     config.add_component_field 'appraisal_tesim', label: 'Appraisal Information', helper_method: :render_html_tags
     config.add_component_field 'custodhist_tesim', label: 'Custodial History', helper_method: :render_html_tags
