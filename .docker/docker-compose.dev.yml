@@ -24,7 +24,7 @@ services:
       - FINDING_AID_DATA=./sample-ead
 
   redis:
-    image: redis:6-buster
+    image: redis:6
 
   resque:
     image: dul-arclight
