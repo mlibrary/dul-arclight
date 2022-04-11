@@ -13,7 +13,7 @@ gem 'devise'
 gem 'devise-guests', '~> 0.6'
 gem 'font-awesome-sass', '~> 5.12.0'
 gem 'jquery-rails'
-gem 'mini_racer', '~> 0.4.0', platforms: :ruby
+gem 'mini_racer', '~> 0.5', platforms: :ruby
 gem 'pg'
 gem 'puma'
 gem 'rails', '~> 5.2.3'
