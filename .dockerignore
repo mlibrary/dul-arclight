@@ -1,0 +1,13 @@
+.bundle
+.byebug_history
+.dockerignore
+.git
+.gitlab-ci.yml
+.ruby-gemset
+.ruby-version
+Dockerfile
+Makefile
+log/*
+node_modules
+tmp/**/*
+vendor/bundle

@@ -24,7 +24,7 @@ services:
       - FINDING_AID_DATA=./sample-ead
 
   redis:
-    image: redis:6-buster
+    image: redis:6
 
   resque:
     image: dul-arclight
@@ -43,14 +43,9 @@ services:
     healthcheck:
       disable: true
     stop_signal: SIGQUIT
-    entrypoint:
-      - wait-for-it
-      - db:5432
-      - '--'
+    restart: on-failure
     command:
-      - bundle
-      - exec
-      - rake
+      - bin/rails
       - resque:pool
 
   resque-web:
@@ -68,10 +63,7 @@ services:
       - SOLR_URL=http://solr:8983/solr/arclight
     healthcheck:
       disable: true
-    entrypoint:
-      - wait-for-it
-      - redis:6379
-      - '--'
+    restart: on-failure
     command:
       - bundle
       - exec
