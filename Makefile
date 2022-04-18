@@ -1,19 +1,14 @@
 SHELL = /bin/bash
 
 build_tag ?= dul-arclight
-builder_image ?= gitlab-registry.oit.duke.edu/devops/containers/ruby:2.6-main
 
-build_opts = --assemble-user 0 --incremental --pull-policy never
+ruby_version ?= $(shell cat .ruby-version)
 
-$(shell git diff-index --quiet HEAD --)
-ifeq ($(.SHELLSTATUS), 1)
-	build_opts := $(build_opts) --copy
-endif
+cache_volume ?= bundle_cache
 
 .PHONY : build
 build:
-	docker pull $(builder_image)
-	s2i build file://$(shell pwd) $(builder_image) $(build_tag) $(build_opts)
+	docker build -t $(build_tag) --build-arg ruby_version=$(ruby_version) .
 
 .PHONY : clean
 clean:
@@ -23,18 +18,47 @@ clean:
 .PHONY : test
 test:
 	./.docker/test.sh -f docker-compose.test-default.yml up --exit-code-from app; \
-		code=$$?; \
-		./.docker/test.sh down; \
-		exit $$code
+	code=$$?; \
+	./.docker/test.sh down; \
+	exit $$code
 
 .PHONY : accessibility
 accessibility:
 	./.docker/test.sh -f docker-compose.test-a11y.yml up --exit-code-from app; \
-		code=$$?; \
-		./.docker/test.sh down; \
-		exit $$code
+	code=$$?; \
+	./.docker/test.sh down; \
+	exit $$code
 
 .PHONY : rubocop
 rubocop:
 	docker run --rm -v "$(shell pwd):/opt/app-root" $(build_tag) \
 		bundle exec rubocop
+
+.PHONY: lock
+lock:
+	docker run --rm -u "$(shell id -u):0" \
+		-v "$(shell pwd)/Gemfile:/usr/src/app/Gemfile" \
+		-v "$(shell pwd)/Gemfile.lock:/usr/src/app/Gemfile.lock" \
+		gitlab-registry.oit.duke.edu/devops/docker-bundle:ruby-$(ruby_version) \
+		lock
+
+.PHONY: cache
+cache:
+	docker volume create $(cache_volume)
+
+.PHONY: update
+update:
+	docker run --rm -u "$(shell id -u):0" \
+		-v "$(shell pwd)/Gemfile:/usr/src/app/Gemfile" \
+		-v "$(shell pwd)/Gemfile.lock:/usr/src/app/Gemfile.lock" \
+		-v "bundle_cache:/usr/local/bundle" \
+		gitlab-registry.oit.duke.edu/devops/docker-bundle:ruby-$(ruby_version) \
+		update $(gems)
+
+.PHONY: audit
+audit:
+	docker run --rm \
+		-v "$(shell pwd)/Gemfile:/data/Gemfile" \
+		-v "$(shell pwd)/Gemfile.lock:/data/Gemfile.lock" \
+		gitlab-registry.oit.duke.edu/devops/containers/bundler-audit:main \
+		check --update --ignore="CVE-2015-9284"
