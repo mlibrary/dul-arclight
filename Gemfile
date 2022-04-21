@@ -17,7 +17,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails', '~> 5.2.3'
 gem 'rails_autolink'
-gem 'resque', '~> 2.0'
+gem 'resque', '< 2.2.0' # resque 2.2.0 breaks resque-web
 gem 'resque-pool'
 gem 'rsolr', '>= 1.0', '< 3'
 gem 'sass-rails', '~> 5.0'
