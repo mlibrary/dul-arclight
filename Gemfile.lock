@@ -447,7 +447,7 @@ DEPENDENCIES
   puma
   rails (~> 5.2.3)
   rails_autolink
-  resque (~> 2.0)
+  resque (< 2.2.0)
   resque-pool
   rsolr (>= 1.0, < 3)
   rspec-rails (~> 4.0)

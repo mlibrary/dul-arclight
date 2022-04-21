@@ -5,7 +5,7 @@ preload_app!
 bind "tcp://0.0.0.0:%s" % ENV.fetch("RAILS_PORT") { 3000 }
 
 # Require token for control app in production
-if ENV['PUMA_CONTROL_APP_TOKEN'].present?
+if ENV['PUMA_CONTROL_APP_TOKEN']
   activate_control_app 'tcp://0.0.0.0:%s' % ENV['PUMA_CONTROL_APP_PORT'],
                        { token: ENV['PUMA_CONTROL_APP_TOKEN'] }
 end
