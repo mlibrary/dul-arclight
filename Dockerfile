@@ -2,6 +2,8 @@ ARG ruby_version
 
 FROM ruby:${ruby_version} as base
 
+ARG node_version="16"
+
 SHELL ["/bin/bash", "-c"]
 
 ENV BUNDLE_IGNORE_CONFIG="true" \
@@ -9,7 +11,7 @@ ENV BUNDLE_IGNORE_CONFIG="true" \
 	BUNDLE_USER_HOME="${GEM_HOME}"
 
 RUN set -eux; \
-	curl -sL https://deb.nodesource.com/setup_12.x | bash - ; \
+	curl -sL https://deb.nodesource.com/setup_${node_version}.x | bash - ; \
 	apt-get -y update; \
 	apt-get -y install libpq-dev nodejs; \
         # Update Rubygems
