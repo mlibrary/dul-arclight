@@ -6,8 +6,8 @@ The application currently runs at [https://archives.lib.duke.edu](https://archiv
 
 ## Requirements
 
-* [Ruby](https://www.ruby-lang.org/en/) 2.6 or later
-* [Rails](http://rubyonrails.org) 5.0 or later
+* [Ruby](https://www.ruby-lang.org/en/) 2.7 or later
+* [Rails](http://rubyonrails.org) 6.1 or later
 
 ## Getting Started
 

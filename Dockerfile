@@ -2,6 +2,8 @@ ARG ruby_version
 
 FROM ruby:${ruby_version} as base
 
+ARG node_version="16"
+
 SHELL ["/bin/bash", "-c"]
 
 ENV BUNDLE_IGNORE_CONFIG="true" \
@@ -9,10 +11,10 @@ ENV BUNDLE_IGNORE_CONFIG="true" \
 	BUNDLE_USER_HOME="${GEM_HOME}"
 
 RUN set -eux; \
-	curl -sL https://deb.nodesource.com/setup_12.x | bash - ; \
+	curl -sL https://deb.nodesource.com/setup_${node_version}.x | bash - ; \
 	apt-get -y update; \
 	apt-get -y install libpq-dev nodejs; \
-        # Update Rubygems for mini_racer
+        # Update Rubygems
 	gem update --system; \
 	npm install -g yarn
 
@@ -24,11 +26,8 @@ WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile.lock ./
 
-RUN gem install mini_racer \
-	  -v "$(grep -E -m 1 'mini_racer' Gemfile.lock | grep -Po '\d\.\d\.\d')" \
-	  --source 'https://rubygems.org'; \
-	gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')"; \
-	bundle install
+RUN gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')" \
+	&& bundle install
 
 #------
 

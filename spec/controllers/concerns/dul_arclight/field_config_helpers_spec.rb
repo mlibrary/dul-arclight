@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Modeled after ArcLight core spec; see:
+# https://github.com/projectblacklight/arclight/blob/master/spec/controllers/concerns/arclight/field_config_helpers_spec.rb
+
 require 'spec_helper'
 
 class TestController
@@ -26,7 +29,7 @@ RSpec.describe DulArclight::FieldConfigHelpers do
   end
 
   before do
-    allow(helper).to receive(:view_context) { ActionView::Base.new }
+    allow(helper).to receive(:view_context) { ActionView::Base.new(nil, {}, nil) }
   end
 
   describe '#keep_raw_values' do
