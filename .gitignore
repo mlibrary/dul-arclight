@@ -2,6 +2,7 @@
 
 /.docker/upload
 /.docker/downloads
+/.docker/.env
 
 /log/*
 /tmp/*
