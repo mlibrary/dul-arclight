@@ -12,7 +12,7 @@ stages:
   - deploy
 
 variables:
-  build_tag: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  # using build_tag var from container-flexible template
   release_tag: $CI_REGISTRY_IMAGE/$CI_ENVIRONMENT_SLUG:latest
 
 bundler-audit:
@@ -29,10 +29,8 @@ bundler-audit:
   tags:
     - development
   only:
-    - develop
-    - /^release-.*$/
-    - /^hotfix-.*$/
-    - /^aery-.*$/
+    variables:
+      - $CI_COMMIT_REF_NAME == $DEVELOPMENT_REF_NAME
 
 .staging:
   environment:
@@ -41,10 +39,8 @@ bundler-audit:
   tags:
     - staging
   only:
-    - develop
-    - tags
-    - /^release-.*$/
-    - /^hotfix-.*$/
+    variables:
+      - $CI_COMMIT_REF_NAME == $STAGING_REF_NAME
 
 .production:
   environment:
@@ -53,7 +49,7 @@ bundler-audit:
   tags:
     - production
   only:
-    - master
+    - main
 
 #
 # Jobs
