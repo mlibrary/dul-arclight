@@ -57,8 +57,5 @@ update:
 
 .PHONY: audit
 audit:
-	docker run --rm \
-		-v "$(shell pwd)/Gemfile:/data/Gemfile" \
-		-v "$(shell pwd)/Gemfile.lock:/data/Gemfile.lock" \
-		gitlab-registry.oit.duke.edu/devops/containers/bundler-audit:main \
-		check --update --ignore="CVE-2015-9284"
+	docker run --rm -v "$(shell pwd):/data" \
+		gitlab-registry.oit.duke.edu/devops/containers/bundler-audit:main
