@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'arclight', '0.4.0'
+gem 'arclight', '0.5.0'
 gem 'blacklight-hierarchy', '~> 4.2'
 gem 'blacklight-locale_picker', '~> 0.3'
 gem 'blacklight_dynamic_sitemap', '~> 0.5'
