@@ -34,28 +34,27 @@ rubocop:
 	docker run --rm -v "$(shell pwd):/opt/app-root" $(build_tag) \
 		bundle exec rubocop
 
+.PHONY: bundler-image
+bundler-image:
+	echo -e "FROM ruby:$(ruby_version)\nRUN gem install bundler bundler-audit" \
+		| docker build -t bundler-image -
+
 .PHONY: lock
-lock:
-	docker run --rm -u "$(shell id -u):0" \
-		-v "$(shell pwd)/Gemfile:/usr/src/app/Gemfile" \
-		-v "$(shell pwd)/Gemfile.lock:/usr/src/app/Gemfile.lock" \
-		gitlab-registry.oit.duke.edu/devops/docker-bundle:ruby-$(ruby_version) \
-		lock
+lock: bundler-image
+	docker run --rm -u "$(shell id -u):0" -v "$(shell pwd):/app" -w /app bundler-image \
+		bundle lock
 
 .PHONY: cache
 cache:
 	docker volume create $(cache_volume)
 
 .PHONY: update
-update:
-	docker run --rm -u "$(shell id -u):0" \
-		-v "$(shell pwd)/Gemfile:/usr/src/app/Gemfile" \
-		-v "$(shell pwd)/Gemfile.lock:/usr/src/app/Gemfile.lock" \
-		-v "bundle_cache:/usr/local/bundle" \
-		gitlab-registry.oit.duke.edu/devops/docker-bundle:ruby-$(ruby_version) \
-		update $(gems)
+update: bundler-image
+	docker run --rm -u "$(shell id -u):0" -v "$(shell pwd):/app" -w /app \
+		-v "bundle_cache:/usr/local/bundle" bundler-image \
+		bundle update $(gems)
 
 .PHONY: audit
-audit:
-	docker run --rm -v "$(shell pwd):/data" \
-		gitlab-registry.oit.duke.edu/devops/containers/bundler-audit:main
+audit: bundler-image
+	docker run --rm -v "$(shell pwd):/data" -w /data bundler-image \
+		bundle-audit check --update
