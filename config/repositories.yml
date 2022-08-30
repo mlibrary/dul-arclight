@@ -55,7 +55,7 @@ adf:
     Materials from the ADF Archives may be viewed by appointment in the David M. Rubenstein Rare
     Book & Manuscript Library at Duke University. Visits may be arranged in advance by contacting the
     ADF archivist at
-    <a href='mailto:adfarchives@americandancefestival.org'>adfarchives@americandancefestival.org</a>.
+    <a href='mailto:adf@americandancefestival.org'>adf@americandancefestival.org</a>.
     Visitors will need to comply with Duke's registration and security policies.
   description: |
     The American Dance Festival Archives serves as the repository for records of enduring historical
@@ -69,7 +69,7 @@ adf:
   zip: '27708'
   country: 'USA'
   phone: '919-684-6402'
-  contact_info: 'adfarchives@americandancefestival.org'
+  contact_info: 'adf@americandancefestival.org'
   thumbnail_url: 'https://library.duke.edu/sites/default/files/rubenstein/arclight/duke-adf.jpg'
   request_types:
     duke_request:
