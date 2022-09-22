@@ -157,6 +157,11 @@
   </a>
 </div>
 
+<div>
+<% if document.accessrestrict_collection_banner.present? %>
+  <%= render 'catalog/alerts/collection_alert' %>
+<% end %>
+</div>
 
 <%# ============================ %>
 <%# Component-level Restrictions %>

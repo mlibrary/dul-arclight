@@ -315,6 +315,12 @@ RESTRICTION_FIELDS.map do |selector|
   to_field "#{selector}_teim", extract_xpath("/ead/archdesc/#{selector}/*[local-name()!='head']")
 end
 
+# DUL CUSTOMIZATION: Special case for collection-level accessrestrict that is
+# intended to display loudly as a warning banner throughout the collection
+to_field 'accessrestrict_collection_banner_tesim',
+         extract_xpath("/ead/archdesc/accessrestrict[head='banner' or head='Banner']/*[local-name()!='head']",
+                       to_text: false)
+
 # DUL CUSTOMIZATION: exclude repository/corpname since it's always Rubenstein.
 NAME_ELEMENTS.map do |selector|
   to_field 'names_coll_ssim', extract_xpath("/ead/archdesc/controlaccess/#{selector}"), unique
@@ -539,6 +545,11 @@ compose 'components', ->(record, accumulator, _context) { accumulator.concat rec
   # DUL CUSTOMIZATION: redefine parent as top-level collection <phystech>
   to_field 'parent_access_phystech_tesim' do |_record, accumulator, context|
     accumulator.concat Array.wrap(context.clipboard[:parent].output_hash['phystech_tesim'])
+  end
+
+  # DUL CUSTOMIZATION: capture DUL-concocted collection-level alert banner even for components
+  to_field 'accessrestrict_collection_banner_tesim' do |_record, accumulator, context|
+    accumulator.concat Array.wrap(context.clipboard[:parent].output_hash['accessrestrict_collection_banner_tesim'])
   end
 
   # DUL CUSTOMIZATION: redefine component <accessrestrict> & <userestrict> as own values OR values from

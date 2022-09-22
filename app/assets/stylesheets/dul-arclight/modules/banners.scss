@@ -104,6 +104,27 @@
     }
   }
 
+  &.banner-alternative {
+    background-color: tint($ironweed, 90);
+    .banner-heading {
+      color: tint($ironweed, 95);
+      background-color: $ironweed;
+      & .blacklight-icons svg {
+        fill: tint($ironweed, 95);
+      }
+    }
+    .banner-shadow {
+      background-color: tint($ironweed, 70);
+    }
+    .banner-message {
+      .banner-message-text {
+        font-weight: 600;
+        color: shade($ironweed, 90);
+      }
+    }
+  }
+
+
 }
 
 
