@@ -42,20 +42,7 @@
   <%# Configurable alert banner; set via un/commenting dul_arclight.home.alert.* %>
   <%# keys in config/locales/dul_arclight.en.yml %>
   <% if I18n.exists?('dul_arclight.home.alert') %>
-    <div id="homepage-alert" class="mb-5 col-md-12 banner-wrapper banner-warning d-flex flex-row">
-      <div class="banner-part banner-heading">
-        <%= blacklight_icon :exclamation_triangle_solid %>
-        <span class="banner-heading-text d-none d-lg-inline pr-4">
-          <%= t('dul_arclight.home.alert.title') %>
-        </span>
-      </div>
-      <div class="banner-part banner-shadow"></div>
-      <div class="banner-part banner-message flex-grow-1">
-        <div class="mb-0 banner-message-text p-2">
-          <%= t('dul_arclight.home.alert.message_html').html_safe %>
-        </div>
-      </div>
-    </div>
+    <%= render 'catalog/alerts/homepage_alert' %>
   <% end %>
 
   <div id="homepage-text-blocks" class="row mt-4 mb-5">
