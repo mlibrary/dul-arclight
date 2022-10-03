@@ -2,15 +2,9 @@ version: '3.7'
 
 services:
   selenium:
-    # This tag seems to work; some others do not.
-    # E.g., :latest tag throws ERR_SSL_PROTOCOL_ERROR.
-    # If problems occur, we can explore more tags:
+    # This image is a multi-arch alternative to:
     # https://hub.docker.com/r/selenium/standalone-chrome/
-
-    # For Mac M1/ARM support, use an .env file to specify a compatible
-    # Docker image for Selenium.
-    # https://hub.docker.com/r/seleniarm/standalone-chromium
-    image: ${SELENIUM_DOCKER_IMAGE:-selenium/standalone-chrome:3.141.59-xenon}
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
     volumes:
@@ -23,6 +17,7 @@ services:
     container_name: selenium
 
   app:
+    container_name: testapp
     volumes:
       - ../spec/fixtures:/data:ro
     environment:
