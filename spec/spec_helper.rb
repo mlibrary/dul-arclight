@@ -8,6 +8,7 @@ ENV['RAILS_ENV'] ||= 'test'
 # Use our actual repositories config file, not a test one.
 ENV['REPOSITORY_FILE'] ||= 'config/repositories.yml'
 require File.expand_path('../config/environment', __dir__)
+require File.expand_path('support/wait_for_ajax.rb', __dir__)
 SPEC_ROOT = Pathname.new(__dir__)
 
 require 'rspec/rails'
@@ -20,7 +21,7 @@ Capybara.register_driver :selenium_remote do |app|
     # See Chromium/Chromedriver capabilities:
     # https://chromedriver.chromium.org/capabilities
     # https://peter.sh/experiments/chromium-command-line-switches/
-    chromeOptions: { args: [
+    'goog:chromeOptions': { args: [
       'headless',
       'no-sandbox',
       'disable-gpu',
@@ -32,7 +33,7 @@ Capybara.register_driver :selenium_remote do |app|
 
   Capybara::Selenium::Driver.new(app,
                                  browser: :remote,
-                                 desired_capabilities: capabilities,
+                                 capabilities: capabilities,
                                  url: 'http://selenium:4444/wd/hub')
 end
 
@@ -42,16 +43,22 @@ Capybara.server = :puma, { Threads: '1:1' }
 
 Capybara.server_port = '3002'
 Capybara.server_host = '0.0.0.0'
-Capybara.app_host = "http://app:#{Capybara.server_port}"
+Capybara.app_host = "http://testapp:#{Capybara.server_port}"
 
 Capybara.always_include_port = true
-Capybara.default_max_wait_time = 30 # our ajax responses are sometimes slow
+Capybara.default_max_wait_time = 15 # our ajax responses are sometimes slow
+
+# Some CSS transitions for fading elements in/out trip up a11y color contrast tests
+Capybara.disable_animation = true
 
 Capybara.enable_aria_label = true
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
+
+  # Make feature tests wait until AJAX-loaded content is done loading
+  config.include WaitForAjax, type: :feature
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

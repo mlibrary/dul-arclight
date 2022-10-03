@@ -25,13 +25,11 @@ RSpec.describe 'Accessibility (WCAG, 508, Best Practices)', type: :feature, js: 
     end
   end
 
-  # NOTE: axe-core struggles with modals + color contrast false positives
-  # https://github.com/dequelabs/axe-core/issues/2329
   describe 'advanced search modal' do
     it 'is accessible' do
       visit '/'
       find('a.advanced_search').click
-      expect(page).to be_axe_clean.skipping(:color_contrast)
+      expect(page).to be_axe_clean
     end
   end
 
@@ -73,7 +71,8 @@ RSpec.describe 'Accessibility (WCAG, 508, Best Practices)', type: :feature, js: 
   describe 'component with embedded DDR images' do
     it 'is accessible' do
       visit '/catalog/rushbenjaminandjulia_aspace_57d112f2de863cce982fa05420017497'
-      expect(page).to be_axe_clean
+      # Don't test the contents of the iframe -- that should be tested in DDR-Xenon
+      expect(page).to be_axe_clean.excluding('iframe')
     end
   end
 

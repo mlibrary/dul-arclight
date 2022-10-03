@@ -100,6 +100,10 @@
         }
         Blacklight.doBookmarkToggleBehavior();
 
+        // DUL CUSTOMIZATION: Run client-side a11y patches once the dynamic content
+        // has loaded. See assets/javascripts/accessibility-patches.js.
+        applyAccessibilityPatches();
+
         // DUL CUSTOMIZATION: 'deep' clone sortAndPerPage and append ID
         if ( $( sortPerPage ).text().indexOf('Previous') > -1 ) {
           $( sortPerPage ).clone( true ).prop('id', 'sortAndPerPageBottom' ).insertAfter('#documents');
