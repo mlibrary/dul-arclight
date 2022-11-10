@@ -29,8 +29,7 @@ class CustomSitemapsController < ApplicationController
 
   def fetch_docs
     search_service.search(
-      'q': configured_query,
-      'fq': 'level_sim:Collection',
+      'fq': [configured_query, 'level_sim:Collection'],
       'fl': 'id, timestamp',
       'facet': 'false',
       'sort': 'timestamp desc',
