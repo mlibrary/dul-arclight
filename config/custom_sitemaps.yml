@@ -12,8 +12,12 @@
 #    formats_ssim:"Black-and-white photographs"
 #    repository_sim:"Duke University Archives"
 
-
+# List HOM collections for NLM History of Medicine Finding Aids Consortium
 nlm_history_of_medicine:
   query: |
     names_ssim:"History of Medicine Collections (Duke University)"
 
+# List only Rubenstein & UA finding aids, exclude other "repositories"
+rubenstein_ua:
+  query: |
+    repository_ssm:("David M. Rubenstein Rare Book & Manuscript Library" OR "Duke University Archives")
