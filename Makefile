@@ -8,7 +8,10 @@ cache_volume ?= bundle_cache
 
 .PHONY : build
 build:
-	docker build -t $(build_tag) --build-arg ruby_version=$(ruby_version) .
+	docker build -t $(build_tag) \
+		--build-arg ruby_version=$(ruby_version) \
+		--build-arg APP_VCS_REF=$(shell git rev-parse --short HEAD) \
+		.
 
 .PHONY : clean
 clean:
