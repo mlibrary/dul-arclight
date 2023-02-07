@@ -6,7 +6,7 @@ module DulArclight
   end
 
   mattr_accessor :finding_aid_data do
-    ENV.fetch('FINDING_AID_DATA', '/data')
+    ENV.fetch('FINDING_AID_DATA') # Set in Dockerfile
   end
 
   mattr_accessor :google_analytics_tracking_id do
