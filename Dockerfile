@@ -68,10 +68,11 @@ RUN set -eux; \
 RUN echo "$LANG UTF-8" >> /etc/locale.gen; \
     locale-gen $LANG
 
-VOLUME $FINDING_AID_DATA
-
 RUN useradd -r -u $APP_UID -g $APP_GID -d $APP_ROOT -s /sbin/nologin $APP_USER; \
+    mkdir -p $FINDING_AID_DATA; \
     chown -R $APP_UID:$APP_GID . $GEM_HOME $FINDING_AID_DATA
+
+VOLUME $FINDING_AID_DATA
 
 COPY --from=bundle --chown=$APP_UID:$APP_GID $GEM_HOME $GEM_HOME
 
