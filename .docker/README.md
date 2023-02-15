@@ -6,7 +6,6 @@
   [Docker CE](https://docs.docker.com/install/) (Linux)
 - [docker-compose](https://docs.docker.com/compose/install/)
   (Linux only - included in Docker Desktop for Mac/Windows)
-- [source-to-image](https://github.com/openshift/source-to-image#installation)
 - [GNU Make](https://www.gnu.org/software/make/) - Mac can get in XCode
   Command Line Tools (CLT) or via Home Brew.
 
