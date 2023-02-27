@@ -27,5 +27,8 @@ services:
       - DATABASE_URL=postgresql://postgres:arclight@db/arclight
       - GOOGLE_ANALYTICS_DEBUG=true
       - GOOGLE_ANALYTICS_TRACKING_ID=UA-167959564-4
+      - MATOMO_ANALYTICS_DEBUG=true
+      - MATOMO_ANALYTICS_HOST=analytics-dev.lib.duke.edu
+      - MATOMO_ANALYTICS_SITE_ID=1
       - REDIS_URL=redis://redis:6379
       - SOLR_URL=http://solr:8983/solr/arclight
