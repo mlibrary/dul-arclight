@@ -63,7 +63,7 @@
         var u="//analytics-dev.lib.duke.edu/";
         _paq.push(['setTrackerUrl', u+'matomo.php']);
         // site ID = 1 is the analytics dev home site, this is the most important variable. 
-        _paq.push(['setSiteId', '1']);
+        _paq.push(['setSiteId', '<%= DulArclight.matomo_analytics_site_id %>']);
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
         g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
       })
