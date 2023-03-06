@@ -468,6 +468,12 @@ var eventTracking = (function () {
            ga_event.label = <%= props[:label] || "defaultLabel(link)" %>;
            ga_event.custom_dimensions = {};
            sendEventData(ga_event);
+           var m_event = {};
+           m_event.category = <%= props[:category] || "defaultCategory(link)" %>;
+           m_event.action = <%= props[:action] || "defaultAction(link)" %>;
+           m_event.label = <%= props[:label] || "defaultLabel(link)" %>;
+           m_event.custom_dimensions = {};
+           sendMatomoData(m_event);
          });
     <% end %>
 
@@ -554,6 +560,21 @@ var eventTracking = (function () {
     }
   }
 
+  // gather debug information and send to function that tracks events
+  function sendMatomoData(m_event) {
+
+    // TODO: Currently, the debug feature reads from the google-analytics-config div element.
+    // This works, but when GA information is removed from the site, the debug information needs
+    // to be added that is matomo-specific.
+
+    var debug_on = $('#google-analytics-configs').data('ga-debug').toString();
+    if (debug_on == 'true') {
+      console.log('Matomo Event Track', [m_event.category, m_event.action, m_event.label]);
+      console.log('Currently sending events to Site ID:', '<%= DulArclight.matomo_analytics_site_id %>')
+    }
+    sendDataToMatomo(m_event);
+  }
+
   function sendDataToGoogleAnalytics(ga_event) {
 
     <%# See https://developers.google.com/analytics/devguides/collection/gtagjs/events %>
@@ -562,7 +583,11 @@ var eventTracking = (function () {
       'event_category': ga_event.category,
       'event_label': ga_event.label
     });
+  }
 
+  // send custom event to matomo site
+    function sendDataToMatomo(m_event) {
+    _paq.push(['trackEvent', m_event.category, m_event.action, m_event.label]);
   }
 
   return {
