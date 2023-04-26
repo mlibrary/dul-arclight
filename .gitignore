@@ -34,4 +34,5 @@
 # rspec failure tracking
 .rspec_status
 
+/resque_web
 /solr/arclight/data
