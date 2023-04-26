@@ -103,7 +103,7 @@ end
 # Strip out any wayward spaces or linebreaks that might end up in the url attribute
 # and only capture the value if it's a real permalink (with an ARK).
 to_field 'permalink_ssi' do |record, accumulator|
-  url = record.at_xpath('/ead/eadheader/eadid').attribute('url')&.value
+  url = record.at_xpath('/ead/eadheader/eadid').attribute('url')&.value || ''
   url.gsub(/[[:space:]]/, '')
   accumulator << url if url.include?('ark:')
 end
